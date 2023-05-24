@@ -26,7 +26,7 @@ router.get('/:id', (req, res) =>{
 
 
 //Create Member 
-app.post('/', async (req, res) => {
+app.post('/member', async (req, res) => {
     try {
         // save the data
         const {full_name, user_name, email, address, phone, password} = req.body;

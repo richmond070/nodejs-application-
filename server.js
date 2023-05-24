@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // members API routes
-app.use('/api/members', require('./routes/api/members'));
+app.use('/api', require('./routes/api/members'));
 
 
 //view engines
