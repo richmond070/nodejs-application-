@@ -1,9 +1,8 @@
 const express = require('express');
 const members = require('../../Members');
-const pool = require('../../database');
+const {pool} = require('../../database');
 const router = express.Router();
 
-const app = express();
 
 //connecting the database 
 pool.connect();
@@ -26,25 +25,47 @@ router.get('/:id', (req, res) =>{
 
 
 //Create Member 
-app.post('/member', async (req, res) => {
-    try {
-        // save the data
-        const {full_name, user_name, email, address, phone, password} = req.body;
-        const newUser = await pool.query("INSERT into user_info (full_name, user_name, email, address, phone, password)VALUES ($1, $2, $3, $4, $5, $6) RETURNING * "
-         [full_name, user_name, email, address, phone, password]
-        );
+router.post('/register', async (req, res) => {
+    let {name, username, email, address, phone, password, password2} = req.body;
 
-        res.json(newUser.rows[0]);
+    console.log({
+        name,
+        username,
+        email,
+        address,
+        phone,
+        password,
+        password2
+    });
 
-        //Release the client from the connection pool 
-        pool.end();
-        
-        //send a response indicating success
-        res.status(201).json({message: 'Data was saved successfully'})
+    let errors = []
 
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({error: 'Internal server error'});
+    if ( !name || !username || !email || !address || !phone || !password || !password2 ) {
+        errors.push({message: "Please enter all fields"});
+    }
+
+    if (password.length < 10){
+        errors.push({message: "Password should be at least 10 characters"});
+    }
+
+    if(password != password2){
+        errors.push({message: "Passwords do not match"});
+    }
+
+    if (errors.length > 0){
+        res.render("register", {errors});
+    }else {
+        // Form validation has passed 
+        pool.query (
+            `SELECT * FROM user_info
+            WHERE email = $1`, [email], (err, results) =>{
+                if (err){
+                    throw err
+                }
+                console.log('reaches here');
+                console.log(results.rows);
+            }
+        )
     }
 });
 
