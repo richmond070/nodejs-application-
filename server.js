@@ -1,4 +1,5 @@
 const express = require("express");
+const app = express();
 const routes = require("./routes/api/members");
 const path = require('path');
 const {pool} = require('./database');
@@ -8,14 +9,15 @@ const flash = require('express-flash');
 const passport = require('passport');
 const cors = require ("cors");
 
-const app = express();
-
-//connecting the database 
-pool.connect();
 
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
+
+
+//connecting the database 
+pool.connect();
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -25,7 +27,7 @@ app.use(cors())
 
 // Body Parser Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -62,7 +64,7 @@ app.get("/login", function (req, res) {
 });
 
 app.get("/dashboard", function (req, res) {
-    res.render("dashboard", {user: "Best"});
+    res.render("dashboard", {user: req.user.name });
 });
 
 app.post('/register', async (req, res) => {
@@ -78,14 +80,15 @@ app.post('/register', async (req, res) => {
         password2
     });
 
-    let errors = []
+    // FOR FORM VALIDATION 
+    let errors = [];
 
     if ( !name || !username || !email || !address || !phone || !password || !password2 ) {
         errors.push({message: "Please enter all fields"});
     }
 
     if (password.length < 6){
-        errors.push({message: "Password should be at least 10 characters"});
+        errors.push({message: "Password should be at least 6 characters"});
     }
 
     if(password != password2){
@@ -96,7 +99,7 @@ app.post('/register', async (req, res) => {
         res.render("register", {errors});
     }else {
         // Form validation has passed 
-
+        //hashed passwords
         let hashedPassword = await bcrypt.hash(password, 10);
         console.log(hashedPassword);
 
@@ -111,14 +114,14 @@ app.post('/register', async (req, res) => {
                 console.log(results.rows);
 
                 if (results.rows.length > 0) {
-                    errors.push({message: "Email already exist"});
+                    errors.push({message: " already exist"});
                     res.render("register", {errors});
                 }else{
                     pool.query(
                         `INSERT INTO user_info (full_name, user_name, email, address, phone_number, password)
                         VALUES ($1, $2, $3, $4, $5, $6)
                         RETURNING user_id, password`,
-                        [name, username, email, address, phone, hashedPassword],
+                        [name, username, email, address, phone, password],
                         (err, results) => {
                             if (err) {
                                 throw err;
