@@ -27,7 +27,7 @@ app.use(cors())
 
 // Body Parser Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
 
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -66,6 +66,12 @@ app.get("/login", function (req, res) {
 app.get("/dashboard", function (req, res) {
     res.render("dashboard", {user: req.user.name });
 });
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    req.flash("success_msg", "You have logged out");
+    res.redirect("/login")
+})
 
 app.post('/register', async (req, res) => {
     let {name, username, email, address, phone, password, password2} = req.body;
@@ -114,14 +120,14 @@ app.post('/register', async (req, res) => {
                 console.log(results.rows);
 
                 if (results.rows.length > 0) {
-                    errors.push({message: " already exist"});
+                    errors.push({message: "email already exist"});
                     res.render("register", {errors});
                 }else{
                     pool.query(
                         `INSERT INTO user_info (full_name, user_name, email, address, phone_number, password)
                         VALUES ($1, $2, $3, $4, $5, $6)
                         RETURNING user_id, password`,
-                        [name, username, email, address, phone, password],
+                        [name, username, email, address, phone, hashedPassword],
                         (err, results) => {
                             if (err) {
                                 throw err;
