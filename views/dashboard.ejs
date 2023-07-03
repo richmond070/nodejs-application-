@@ -4,11 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <title>ETERNAL TRADING </title>
+
 </head>
 <body>
+    <div class="user-info">
+        <h3>WELCOME  <%= user %></h3>
+        <div class="user">
+            <ul>
+                <li><span>MAIN</span><br> <br><a href="#"> Dashboard</a></li>
+                <li><span>FINANCES</span> <br> <br> <a href="#"> Transaction</a></li>
+                <li><span>ACCOUNT SUMMARY</span><br> <br><a href="#"> History</a></li>
 
-    <a href="/logout">Logout</a>
-    <h1>Hello <%= user %></h1>
+            </ul>
+        </div>
+        <div class="user-settings">
+            <p>SETTINGS</p>
+            <a href="#"> Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+   
+    <div class="user-dashboard">
+        <h2 class="home-button">Eternal Trading</h2>
+        <nav class="nav-log">
+            <div id="nav-bar" class="primary-navigation">
+                <h3>Dashboard</h3>
+                <p>Home</p>
+            </div>
+            <a href="/deposit">Deposit</a>
+        </nav>
+
+        <div class="user-content">
+            <div class="single-team one">
+                <p>Deposit</p>
+                <h3>$0.00</h3>
+                <span>Total amount invested</span>
+            </div>
+
+            <div class="single-team two">
+                <p>Withdrawals</p>
+                <h3>$0.00</h3>
+                <span>Total amount withdrawn</span>
+            </div>
+
+            <div class="single-team three">
+                <p>Current Balance</p>
+                <h3>$0.00</h3>
+                <span>Withdrawable balance </span>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternal Trading</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body, html {
+    display: grid;
+    grid-template-columns: 50% 150%;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*USER INFORMATION BOARD*/
+
+.user-info{
+    background-color: rgba(0, 60, 255, 0.63);
+    color: azure;
+    display: grid;
+    justify-content: center;
+    padding-top:2vw ;
+}
+.user ul {
+    padding: 0.5vh;
+    display: grid;
+    justify-content: space-between;
+}
+.user ul li {
+    padding-bottom: 5vh;
+    font-weight: 500;
+}
+.user ul li span {
+    padding-bottom:3vh;
+    font-size: 1vw;
+    font-weight: 300;
+}
+.user ul li a {
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: 700;
+    padding-top: 10px;
+}
+.user-settings{
+    display: grid;
+    grid-row-gap: 0.5px;
+}
+.user-settings p {
+    padding-bottom:1vh;
+    font-size: 1vw;
+    font-weight: 300;
+}
+.user-settings a {
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+
+/*USER DASHBOARD */
+.user-dashboard {
+    background-color:rgb(221, 221, 221);
+}
+.user-dashboards h2 {
+    background-color: #0004;
+    text-align: center;
+    width: 100%;
+    padding: 1.5%;
+}
+.nav-log{
+    display:flex;
+    justify-content: space-between;
+    padding: 1.5vw;
+    background-color: rgba(192, 192, 192, 0.623);
+}
+.primary-navigation {
+    display: grid;
+    justify-content: space-between;
+}
+.nav-log a {
+    text-decoration: none;
+    background-color:rgba(0, 60, 255, 0.63);
+    text-align: center;
+    color: aliceblue;
+    height: 5%;
+    width: 10%;
+    font-weight: 600;
+    padding: 2px;
+}
+.deposit-form {
+    padding: 3vw;
+    margin: 5vw;
+    align-content: center;
+    background-color: #ffffffda;
+}
+.deposit-form form {
+    display: grid;
+    grid-row-gap: 2vw;
+    padding-left: 4vw;
+    padding-bottom: 3vw;
+}
+form span{
+    font-size: 2.5vw;
+    text-align: start;
+    align-self: baseline;
+    transform: translateY(50%);
+}
+form input {
+    width: 80%;
+    height: 150%;
+}
+.pay-btn {
+    padding: 8px;
+    background-color:rgba(0, 60, 255, 0.63) ;
+    font-size: 2vw;
+    color: aliceblue;
+    border: none;
+}
+</style>
+</head>
+<body>
+    <div class="user-info">
+        <h3>WELCOME</h3>
+        <div class="user">
+            <ul>
+                <li><span>MAIN</span><br> <br><a href="/dashboard"> Dashboard</a></li>
+                <li><span>FINANCES</span> <br> <br> <a href="#"> Transaction</a></li>
+                <li><span>ACCOUNT SUMMARY</span><br> <br><a href="#"> History</a></li>
+
+            </ul>
+        </div>
+        <div class="user-settings">
+            <p>SETTINGS</p>
+            <a href="#"> Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+   
+    <div class="user-dashboard">
+
+        <div class="user-dashboards">
+            <h2 class="home-button">Eternal Trading</h2>
+            <nav class="nav-log">
+                <div id="nav-bar" class="primary-navigation">
+                    <h3>Dashboard</h3>
+                    <p>Home</p>
+                </div>
+                <a href="/deposit">Deposit</a>
+            </nav>
+    
+            <div class="deposit-form">
+               <form action="post">
+                    <span>Select Plan</span>
+                    <input type="text" placeholder="Plan" name="Plan" id="invest-plan">
+                    <span>Select Payment Method</span>
+                    <input type="text" placeholder="Bitcoin" name="pay-method" id="pay">
+                    <span>Enter Amount ($) </span>
+                    <input type="number" placeholder="50.00" name="amount" id="amount-paid">
+               </form>
+                <button class="pay-btn">Proceed</button>    
+            </div>
+    </div>
+</body>
+</html>

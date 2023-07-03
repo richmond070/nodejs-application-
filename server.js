@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-const routes = require("./routes/api/members");
 const path = require('path');
 const {pool} = require('./database');
+//const members = require('./routes/api/members');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const flash = require('express-flash');
@@ -14,12 +14,10 @@ const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
 
-
 //connecting the database 
 pool.connect();
 
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 //cors header
 app.use(cors())
@@ -55,22 +53,31 @@ app.use(passport.session());
 
 app.use(flash());
 
-app.get("/register", function (req, res) {
+app.get("/register", checkAuthenticated, (req, res) => {
     res.render("register");
 });
 
-app.get("/login", function (req, res) {
+app.get("/login", checkAuthenticated, (req, res) => {
     res.render("login");
 });
 
-app.get("/dashboard", function (req, res) {
-    res.render("dashboard", {user: req.user.name });
+app.get("/dashboard", checkNotAuthenticated, (req, res) => {
+    res.render("dashboard", { user: req.body.name });
 });
 
+app.get('/deposit', (req, res) => {
+    res.render('deposit');
+})
+
 app.get('/logout', (req, res) => {
-    req.logout();
-    req.flash("success_msg", "You have logged out");
-    res.redirect("/login")
+    req.logout(function (err) {
+        if (err) {
+          console.error(err);
+          // Handle error if needed
+        }
+        req.flash("success_msg", "You have logged out");
+        res.redirect("/");
+      });
 })
 
 app.post('/register', async (req, res) => {
@@ -148,6 +155,20 @@ app.post("/login", passport.authenticate('local', {
     failureRedirect: "/login",
     failureFlash: true
 }));
+
+function checkAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect("/dashboard");
+    }
+    next();
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login")
+}
 
 app.listen(PORT, function () {
     console.log(`Server is running on port ${PORT}`);

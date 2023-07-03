@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body, html {
+    display: grid;
+    grid-template-columns: 50% 150%;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*USER INFORMATION BOARD*/
+
+.user-info{
+    background-color: rgba(0, 60, 255, 0.63);
+    color: azure;
+    display: grid;
+    justify-content: center;
+    padding-top:2vw ;
+}
+.user ul {
+    padding: 0.5vh;
+    display: grid;
+    justify-content: space-between;
+}
+.user ul li {
+    padding-bottom: 5vh;
+    font-weight: 500;
+}
+.user ul li span {
+    padding-bottom:3vh;
+    font-size: 1vw;
+    font-weight: 300;
+}
+.user ul li a {
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: 700;
+    padding-top: 10px;
+}
+.user-settings{
+    display: grid;
+    grid-row-gap: 0.5px;
+}
+.user-settings p {
+    padding-bottom:1vh;
+    font-size: 1vw;
+    font-weight: 300;
+}
+.user-settings a {
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+
+/*USER DASHBOARD */
+.user-dashboard {
+    background-color:rgb(221, 221, 221);
+}
+.user-dashboard h2 {
+    background-color: #0004;
+    text-align: center;
+    width: 100%;
+    padding: 1.5%;
+}
+.nav-log{
+    display:flex;
+    justify-content: space-between;
+    padding: 1.5vw;
+    background-color: rgba(192, 192, 192, 0.623);
+}
+.primary-navigation {
+    display: grid;
+    justify-content: space-between;
+}
+.nav-log a {
+    text-decoration: none;
+    background-color:rgba(0, 60, 255, 0.63);
+    text-align: center;
+    color: aliceblue;
+    height: 5%;
+    width: 10%;
+    font-weight: 600;
+    padding: 2px;
+}
+
+/* USER DEPOSIT CARDS*/
+.user-content {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 2vw;
+}
+.user-content .single-team {
+    background-color: #fff;
+    padding:2vw 3vw;
+    display: grid;
+    grid-row-gap: 1vw;
+}
