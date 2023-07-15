@@ -115,7 +115,7 @@ form span{
     align-self: baseline;
     transform: translateY(50%);
 }
-form input {
+form input, select {
     width: 80%;
     height: 150%;
 }
@@ -125,6 +125,11 @@ form input {
     font-size: 2vw;
     color: aliceblue;
     border: none;
+    transition: ease-in-out 5ms;
+}
+.pay-btn:hover {
+    background-color:  rgba(192, 192, 192, 0.623);
+    color: #000;
 }
 </style>
 </head>
@@ -161,9 +166,19 @@ form input {
             <div class="deposit-form">
                <form action="post">
                     <span>Select Plan</span>
-                    <input type="text" placeholder="Plan" name="Plan" id="invest-plan">
+                    <select name="invest-plan" id="iv-plan">
+                        <option value="basic">Basic</option>
+                        <option value="standard">Standard</option>
+                        <option value="gold">Gold</option>
+                        <option value="insurance">Insurance</option>
+                        <option value="realEstate">Real Estate</option>
+                        <option value="immigration">Immigration</option>
+                    </select>
                     <span>Select Payment Method</span>
-                    <input type="text" placeholder="Bitcoin" name="pay-method" id="pay">
+                    <select name="pay-method" id="pay">
+                        <option value="btc">BTC</option>
+                        <option value="eth">Etherume</option>
+                    </select>
                     <span>Enter Amount ($) </span>
                     <input type="number" placeholder="50.00" name="amount" id="amount-paid">
                </form>

@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="user-info">
+    <div class="user-info" data-visible='false'>
         <h3>WELCOME  <%= user %></h3>
         <div class="user">
             <ul>
@@ -27,7 +27,13 @@
     </div>
    
     <div class="user-dashboard">
-        <h2 class="home-button">Eternal Trading</h2>
+        <div class="menu-bar">
+            <button class="mobile-nav-toggle"
+            aria-controls="primary-navigation" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+           </button>
+            <h2 class="home-button">Eternal Trading</h2>
+        </div>
         <nav class="nav-log">
             <div id="nav-bar" class="primary-navigation">
                 <h3>Dashboard</h3>

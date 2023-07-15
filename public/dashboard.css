@@ -64,10 +64,37 @@ body, html {
     background-color:rgb(221, 221, 221);
 }
 .user-dashboard h2 {
-    background-color: #0004;
     text-align: center;
     width: 100%;
     padding: 1.5%;
+}
+.user-info li a::after{
+    content: '';
+    width: 0;
+    height: 3px;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    transition: width 0.3s;
+}
+
+.user-info::after{
+width: 50%;
+}
+
+.user-info a > [aria-hidden = "true"] {
+    font-weight: 700;
+    margin-inline-end: 0.75em;
+}
+.menu-bar{
+    background-color: #0004;
+    display: flex;
+    justify-content: space-between;
+}
+.mobile-nav-toggle {
+    display: none;
 }
 .nav-log{
     display:flex;
@@ -75,10 +102,10 @@ body, html {
     padding: 1.5vw;
     background-color: rgba(192, 192, 192, 0.623);
 }
-.primary-navigation {
+/*.primary-navigation {
     display: grid;
     justify-content: space-between;
-}
+}*/
 .nav-log a {
     text-decoration: none;
     background-color:rgba(0, 60, 255, 0.63);
@@ -102,4 +129,88 @@ body, html {
     padding:2vw 3vw;
     display: grid;
     grid-row-gap: 1vw;
+}
+
+/*MOBILE VIEW AND PHONE VIEW*/
+@media (min-width:320px) and (max-width: 768px) {
+    body, html {
+        display:flex ;
+        width: 100%;
+        height: 100%;
+    }
+
+    .user-info {
+        --gap: 2em;
+
+        position:fixed;
+        z-index: 1000;
+        inset: 0 0 0 33%;
+
+        flex-direction: column;
+        padding: min(30vh, 10rem) 2em;
+
+        background: rgba(7, 7, 7, 0.5);
+        backdrop-filter: blur(0.8rem);
+
+        transform: translateX(100%);
+ 
+    }
+
+    .user-info[data-visible="true"] {
+        transform: translateX(-50%);
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+        position: fixed;
+        z-index: 9999;
+        background-color:url("https://www.flaticon.com/premium-icon/navigation_2811759");
+        width: 2.5rem;
+        height: 2rem;
+        aspect-ratio: 5;
+        top: 0.2rem;
+        right: 1rem;
+        font-size: 3vw;
+    }
+    .user-dashboard {
+        background-color:rgb(221, 221, 221);
+        width: 100%;
+    }
+    .nav-log{
+        display:flex;
+        justify-content: space-between;
+        padding: 2vw;
+        background-color: rgba(192, 192, 192, 0.623);
+    }
+    .nav-log a {
+        text-decoration: none;
+        background-color:rgba(0, 60, 255, 0.63);
+        text-align: center;
+        color: aliceblue;
+        height: 5%;
+        width: 20%;
+        font-weight: 600;
+        padding: 2px;
+        position:relative;
+        aspect-ratio: 5;
+        top: 0.2rem;
+        right: 1rem;
+    }
+    .user-content {
+        display: grid;
+        grid-row-gap: 10vw;
+        padding-top: 50px;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        left: 50rem;
+        align-self: center;
+    }
+    .user-content .single-team {
+        background-color: #fff;
+        padding:2vw 3vw;
+        display: grid;
+        grid-row-gap: 1vw;
+        width: 130%;
+    }
 }

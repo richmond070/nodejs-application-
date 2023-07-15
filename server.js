@@ -1,18 +1,49 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-const {pool} = require('./database');
+const {pool} = require('./database'); 
+const env = process.env.NODE_ENV || "development";
 //const members = require('./routes/api/members');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const cors = require ("cors");
+const {Sequelize} = require ('sequelize');
 
 
+const User = require('./models/User');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
+
+/**module.exports = {
+    config: path.resolve('./config', 'config.js'),
+    'models-path': path.resolve('./models'),
+    'seeders-path': path.resolve('./seeders'),
+    'migrations-path': path.resolve('./migrations'),
+}*/
+
+//creating a new Sequelize instance 
+const dbConfig = new Sequelize (
+    process.env.DB_DATABASE,
+    process.env.DB_USER,
+    process.env,DB_PASSWORD, {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        dialect: 'postgres',
+});
+async function testConnection() {
+    try{
+        await sequelize.authenticate();
+        console.log('Connection to the database has been established successfully.');
+    } catch (error) { 
+        console.error('Unable to connect to the database:', error);
+    }
+}
+
+testConnection();
+
 
 //connecting the database 
 pool.connect();
@@ -21,7 +52,6 @@ const PORT = process.env.PORT || 4000;
 
 //cors header
 app.use(cors())
-
 
 // Body Parser Middleware
 app.use(express.json());
