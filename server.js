@@ -199,6 +199,11 @@ function checkNotAuthenticated(req, res, next) {
     res.redirect("/login")
 }
 
-app.listen(PORT, function () {
-    console.log(`Server is running on port ${PORT}`);
-});
+
+(async () => {
+    await testConnection();
+    
+    app.listen(PORT, function () {
+        console.log(`Server is running on port ${PORT}`);
+    });
+})();
