@@ -11,7 +11,7 @@ const cors = require ("cors");
 const {Sequelize} = require ('sequelize');
 
 
-//const User = require('./models/User');
+const user = require('./sequelize/models/user');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -54,7 +54,7 @@ app.use(cors())
 
 // Body Parser Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
