@@ -1,7 +1,9 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../config/config')
-module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('user_info', {
+const {DataTypes} = require('sequelize');
+const sequelize = require('../config/config');
+const Payment = require('./payment');
+
+module.exports = (sequelize) => {
+  const user_info = sequelize.define('user_info', {
     user_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -39,15 +41,14 @@ module.exports = (sequelize, DataTypes) => {
     schema: 'public',
     timestamps: true,
     paranoid: true,
-    indexes: [
-      {
-        name: "user_info_pkey",
-        unique: true,
-        fields: [
-          { name: "user_id" },
-        ]
-      },
-    ]
   });
+
+// defining associations for the tables ..... user has many payments 
+  user_info.hasMany(Payment, {
+    foreignKey: 'user_id',
+    as: 'payment'
+  });
+
+  sequelize.sync({alter: true});
 };
 

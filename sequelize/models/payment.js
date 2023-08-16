@@ -1,7 +1,9 @@
-const Sequelize = require('sequelize');
+const {DataTypes} = require('sequelize');
 const sequelize = require('../config/config');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('payment', {
+const User = require("./user");
+
+module.exports = function(sequelize) {
+  const payment = sequelize.define('payment', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -10,30 +12,29 @@ module.exports = function(sequelize, DataTypes) {
     },
     plan: {
       type: DataTypes.STRING(15),
-      allowNull: false
+      allowNull: true
     },
     paymentMethod: {
       type: DataTypes.STRING(15),
-      allowNull: false
+      allowNull: true
     },
     amount: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'payment',
     schema: 'public',
     timestamps: false,
-    indexes: [
-      {
-        name: "payment_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
   });
-};
 
+  // creating associations for the database.... payment belongsTo one user
+  payment.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'User'
+  });
+
+
+  sequelize.sync({alter: true});
+};
