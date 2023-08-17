@@ -3,20 +3,53 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+
+    const { DataTypes } = require('sequelize');
+
+
+    await queryInterface.createTable('Payments', {
+      id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      plan: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      paymentMethod: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      amount: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'user_info',
+          key: 'user_id',
+          as: 'userId',
+        }
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
+    });
+    
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+  
+    await queryInterface.dropTable('payments');
+     
   }
 };

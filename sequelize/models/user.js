@@ -3,7 +3,7 @@ const sequelize = require('../config/config');
 const Payment = require('./payment');
 
 module.exports = (sequelize) => {
-  const user_info = sequelize.define('user_info', {
+  const User = sequelize.define('user_info', {
     user_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -43,12 +43,16 @@ module.exports = (sequelize) => {
     paranoid: true,
   });
 
-// defining associations for the tables ..... user has many payments 
-  user_info.hasMany(Payment, {
-    foreignKey: 'user_id',
-    as: 'payment'
-  });
+  // defining associations for the tables ..... user has many payments
+  User.associate = function (models) {
+    User.hasMany(models.Payment, {
+      foreignKey: 'userId',
+    });
+  } 
+  
 
   sequelize.sync({alter: true});
+
+  return user_info;
 };
 

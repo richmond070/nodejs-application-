@@ -3,7 +3,7 @@ const sequelize = require('../config/config');
 const User = require("./user");
 
 module.exports = function(sequelize) {
-  const payment = sequelize.define('payment', {
+  const Payment = sequelize.define('payment', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -30,11 +30,16 @@ module.exports = function(sequelize) {
   });
 
   // creating associations for the database.... payment belongsTo one user
-  payment.belongsTo(User, {
-    foreignKey: 'user_id',
-    as: 'User'
-  });
+  Payment.associate = function(models) {
+    // associations can be defined here
+    Payment.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    })
+  };
 
 
   sequelize.sync({alter: true});
+
+  return payment;
 };

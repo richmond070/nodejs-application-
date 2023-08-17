@@ -9,6 +9,7 @@ const flash = require('express-flash');
 const passport = require('passport');
 const cors = require ("cors");
 const {Sequelize} = require ('sequelize');
+const db = require('dotenv').config();
 
 
 const user = require('./sequelize/models/user');
