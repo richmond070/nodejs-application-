@@ -8,41 +8,13 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const cors = require ("cors");
-const {Sequelize} = require ('sequelize');
-const db = require('dotenv').config();
 
 
-const user = require('./sequelize/models/user');
+
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
 
-module.exports = {
-    config: path.resolve('./config', 'config.js'),
-    'models-path': path.resolve('./models'),
-    'seeders-path': path.resolve('./seeders'),
-    'migrations-path': path.resolve('./migrations'),
-}
-
-//creating a new Sequelize instance 
-const sequelize = new Sequelize (
-    process.env.DB_DATABASE,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD, {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: 'postgres',
-});
-async function testConnection() {
-    try{
-        await sequelize.authenticate();
-        console.log('Connection to the database has been established successfully.');
-    } catch (error) { 
-        console.error('Unable to connect to the database:', error);
-    }
-}
-
-testConnection();
 
 
 //connecting the database 
@@ -95,6 +67,7 @@ app.get("/dashboard", checkNotAuthenticated, (req, res) => {
     res.render("dashboard", { user: req.body.name });
 });
 
+//payment route
 app.get('/deposit', (req, res) => {
     res.render('deposit');
 })
@@ -202,7 +175,7 @@ function checkNotAuthenticated(req, res, next) {
 
 
 (async () => {
-    await testConnection();
+    
     
     app.listen(PORT, function () {
         console.log(`Server is running on port ${PORT}`);
