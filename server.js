@@ -2,12 +2,13 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const {pool} = require('./database'); 
-//const members = require('./routes/api/members');
+const payment = require('./routes/api/payment');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const cors = require ("cors");
+
 
 
 
@@ -32,8 +33,8 @@ app.use(express.urlencoded({extended: true}));
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// members API routes
-//app.use('/api', require('./routes/api/members'));
+// API routes
+app.use('/api', require('./routes/api/payment'));
 
 
 //view engines

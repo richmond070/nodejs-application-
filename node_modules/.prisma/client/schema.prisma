@@ -8,18 +8,29 @@ datasource db {
 }
 
 model user_info {
-  user_id      Int     @id @default(autoincrement())
-  full_name    String? @db.VarChar(250)
-  user_name    String? @db.VarChar(100)
-  email        String? @db.VarChar(150)
-  address      String? @db.VarChar(300)
-  phone_number String? @db.VarChar(50)
-  password     String? @db.VarChar(150)
+  user_id      String    @id @default(uuid())
+  full_name    String    @db.VarChar(250)
+  user_name    String    @db.VarChar(100)
+  email        String    @unique @db.VarChar(150)
+  role         Roles     @default(BASIC)
+  address      String    @db.VarChar(300)
+  phone_number String    @db.VarChar(50)
+  password     String    @db.VarChar(150)
+  payments     payment[]
+
+  @@unique([user_name, email])
 }
 
 model payment {
-  id            Int     @id @default(autoincrement())
-  plan          String? @db.VarChar(15)
-  paymentMethod String? @db.VarChar(15)
-  amount        Int?
+  id               String    @id @default(uuid())
+  plan             String    @db.VarChar(15)
+  paymentMethod    String    @db.VarChar(15)
+  amount           Int
+  user             user_info @relation(fields: [user_infoUser_id], references: [user_id])
+  user_infoUser_id String
+}
+
+enum Roles {
+  BASIC
+  ADMIN
 }
