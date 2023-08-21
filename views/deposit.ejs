@@ -119,7 +119,7 @@ form input, select {
     width: 80%;
     height: 150%;
 }
-.pay-btn {
+#pay-btn {
     padding: 8px;
     background-color:rgba(0, 60, 255, 0.63) ;
     font-size: 2vw;
@@ -127,7 +127,7 @@ form input, select {
     border: none;
     transition: ease-in-out 5ms;
 }
-.pay-btn:hover {
+#pay-btn:hover {
     background-color:  rgba(192, 192, 192, 0.623);
     color: #000;
 }
@@ -164,7 +164,7 @@ form input, select {
             </nav>
     
             <div class="deposit-form">
-               <form action="post">
+               <form name="form" action="/deposit" method="POST">
                     <span>Select Plan</span>
                     <select name="plan" id="iv-plan">
                         <option value="basic">Basic</option>
@@ -181,8 +181,9 @@ form input, select {
                     </select>
                     <span>Enter Amount ($) </span>
                     <input type="number" placeholder="50.00" name="amount" id="amount-paid">
+                    <input type="submit" value="deposit" id="pay-btn" placeholder="Proceed">
                </form>
-                <button class="pay-btn">Proceed</button>    
+                <button class="pay-btn" value="deposit">Proceed</button>    
             </div>
     </div>
 </body>

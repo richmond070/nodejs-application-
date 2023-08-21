@@ -8,7 +8,7 @@ datasource db {
 }
 
 model user_info {
-  user_id      String    @id @default(uuid())
+  user_id      Int       @id @default(autoincrement())
   full_name    String    @db.VarChar(250)
   user_name    String    @db.VarChar(100)
   email        String    @unique @db.VarChar(150)
@@ -22,12 +22,12 @@ model user_info {
 }
 
 model payment {
-  id               String    @id @default(uuid())
+  id               Int       @id @default(autoincrement())
   plan             String    @db.VarChar(15)
   paymentMethod    String    @db.VarChar(15)
   amount           Int
   user             user_info @relation(fields: [user_infoUser_id], references: [user_id])
-  user_infoUser_id String
+  user_infoUser_id Int
 }
 
 enum Roles {
