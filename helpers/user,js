@@ -1,0 +1,16 @@
+const express = require("express");
+const app = express();
+const {prisma} = require("../utils/db")
+
+function getUserById() {
+    app.get('/user/:id', async (req, res ) => {
+        const userId = req.params.user_id;
+        
+        const user = await prisma.user_info.findFirst({
+            where: {
+                user_id: userId
+            }
+        });
+        return user
+    })
+}

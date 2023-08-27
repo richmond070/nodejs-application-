@@ -1,15 +1,17 @@
 const express = require("express");
 const app = express();
 const path = require('path');
+
 const {pool} = require('./database'); 
-const payment = require('./routes/api/payment');
 const bcrypt = require('bcrypt');
+
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const cors = require ("cors");
 
 
+const payment = require('./routes/payment');
 
 
 const initializePassport = require("./passportConfig");
@@ -34,14 +36,16 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API routes
-app.use('/api', require('./routes/api/payment'));
+app.use( payment);
 
 
 //view engines
 app.set("view engine", "ejs");
 
 //Body Parser Middleware
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
+
+//sid.signature
 
 app.use(session({
     secret: 'secret',
@@ -176,8 +180,6 @@ function checkNotAuthenticated(req, res, next) {
 
 
 (async () => {
-    
-    
     app.listen(PORT, function () {
         console.log(`Server is running on port ${PORT}`);
     });

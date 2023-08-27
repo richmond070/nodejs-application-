@@ -181,6 +181,7 @@ form input, select {
                     </select>
                     <span>Enter Amount ($) </span>
                     <input type="number" placeholder="50.00" name="amount" id="amount-paid">
+                    <input type="hidden" name="user_id" value="{{ user_id }}" /> 
                     <input type="submit" value="deposit" id="pay-btn" placeholder="Proceed">
                </form>
                 <button class="pay-btn" value="deposit">Proceed</button>    
